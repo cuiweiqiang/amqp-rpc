@@ -13,7 +13,7 @@ import (
 	"context"
 	"fmt"
 
-	amqprpc "github.com/bombsimon/amqp-rpc"
+	amqprpc "github.com/cuiweiqiang/amqp-rpc"
 	uuid "github.com/satori/go.uuid"
 	"github.com/streadway/amqp"
 )

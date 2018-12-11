@@ -9,8 +9,8 @@ import (
 	"strings"
 	"syscall"
 
-	amqprpc "github.com/bombsimon/amqp-rpc"
-	amqprpcmw "github.com/bombsimon/amqp-rpc/middleware"
+	amqprpc "github.com/cuiweiqiang/amqp-rpc"
+	amqprpcmw "github.com/cuiweiqiang/amqp-rpc/middleware"
 
 	"github.com/streadway/amqp"
 )

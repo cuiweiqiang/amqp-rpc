@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	amqprpc "github.com/bombsimon/amqp-rpc"
+	amqprpc "github.com/cuiweiqiang/amqp-rpc"
 
 	"github.com/streadway/amqp"
 )

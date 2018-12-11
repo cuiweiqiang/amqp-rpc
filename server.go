@@ -298,7 +298,7 @@ func (s *Server) consume(binding HandlerBinding, inputCh *amqp.Channel, wg *sync
 		return "", err
 	}
 
-	consumerTag := uuid.Must(uuid.NewV4()).String()
+	consumerTag := uuid.Must(uuid.NewV4(), nil).String()
 	deliveries, err := inputCh.Consume(
 		queueName,
 		consumerTag,
