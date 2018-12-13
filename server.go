@@ -2,6 +2,7 @@ package amqprpc
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"sync"
 	"sync/atomic"
@@ -211,6 +212,7 @@ func (s *Server) listenAndServe() error {
 	defer outputConn.Close()
 
 	inputCh, outputCh, err := createChannels(inputConn, outputConn)
+	fmt.Println("---------------------> createChannels")
 	if err != nil {
 		return err
 	}
