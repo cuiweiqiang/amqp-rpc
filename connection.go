@@ -80,6 +80,12 @@ func monitorAndWait(stopChan chan struct{}, amqpErrs ...chan *amqp.Error) error 
 	}
 }
 
+type QosConfig struct {
+	prefetchCount int
+	prefetchSize int
+	global bool
+}
+
 func createConnections(url string, config amqp.Config) (*amqp.Connection, *amqp.Connection, error) {
 	var (
 		conn1 *amqp.Connection
@@ -99,8 +105,17 @@ func createConnections(url string, config amqp.Config) (*amqp.Connection, *amqp.
 	return conn1, conn2, nil
 }
 
-func createChannels(inputConn, outputConn *amqp.Connection) (*amqp.Channel, *amqp.Channel, error) {
+func createChannels(inputConn, outputConn *amqp.Connection, qc QosConfig) (*amqp.Channel, *amqp.Channel, error) {
 	inputCh, err := inputConn.Channel()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	err = inputCh.Qos(
+		qc.prefetchCount,
+		qc.prefetchSize,
+		qc.global,
+	)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -91,12 +91,15 @@ type Server struct {
 	// print most of what is happening internally.
 	// If nil, logging is not done.
 	debugLog LogFunc
+
+	qosConfig QosConfig
 }
 
 // NewServer will return a pointer to a new Server.
-func NewServer(url string) *Server {
+func NewServer(url string, qc QosConfig) *Server {
 	server := Server{
 		url:         url,
+		qosConfig:   qc,
 		bindings:    []HandlerBinding{},
 		middlewares: []ServerMiddlewareFunc{},
 		dialconfig: amqp.Config{
@@ -211,8 +214,8 @@ func (s *Server) listenAndServe() error {
 	defer inputConn.Close()
 	defer outputConn.Close()
 
-	inputCh, outputCh, err := createChannels(inputConn, outputConn)
-	fmt.Println("---------------------> createChannels")
+	inputCh, outputCh, err := createChannels(inputConn, outputConn, s.qosConfig)
+
 	if err != nil {
 		return err
 	}

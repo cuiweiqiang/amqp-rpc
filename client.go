@@ -86,6 +86,8 @@ type Client struct {
 	// Sender is the main send function called after all middlewares has been
 	// chained and called. This field can be overridden to simplify testing.
 	Sender SendFunc
+
+	qosConfig QosConfig
 }
 
 // NewClient will return a pointer to a new Client. There are two ways to manage the
@@ -98,9 +100,10 @@ type Client struct {
 // It is also possible to create a custom amqp.Config with whatever
 // configuration desired and that will be used as dial configuration when
 // connection to the message bus.
-func NewClient(url string) *Client {
+func NewClient(url string, qc QosConfig) *Client {
 	c := &Client{
 		url: url,
+		qosConfig: qc,
 		dialconfig: amqp.Config{
 			Dial: DefaultDialer,
 		},
@@ -249,7 +252,7 @@ func (c *Client) runOnce() error {
 	defer inputConn.Close()
 	defer outputConn.Close()
 
-	inputCh, outputCh, err := createChannels(inputConn, outputConn)
+	inputCh, outputCh, err := createChannels(inputConn, outputConn, c.qosConfig)
 	if err != nil {
 		return err
 	}
