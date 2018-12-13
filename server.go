@@ -2,7 +2,6 @@ package amqprpc
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"sync"
 	"sync/atomic"
