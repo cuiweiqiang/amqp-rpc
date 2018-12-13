@@ -81,9 +81,9 @@ func monitorAndWait(stopChan chan struct{}, amqpErrs ...chan *amqp.Error) error 
 }
 
 type QosConfig struct {
-	prefetchCount int
-	prefetchSize int
-	global bool
+	PrefetchCount int
+	PrefetchSize int
+	Global bool
 }
 
 func createConnections(url string, config amqp.Config) (*amqp.Connection, *amqp.Connection, error) {
